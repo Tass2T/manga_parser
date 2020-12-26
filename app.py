@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import lxml
 
 baseUrl = 'https://www.mangareader.net'
-manga = "martial-peak"
+manga = "high-school-of-the-dead"
 # will remove the line from the name
 manga_name = manga.replace('-', ' ')
 # number is used for chapter file incrementation
@@ -13,6 +13,7 @@ number = 1
 
 # my functions
 def createDirandMoveIntoIt() : 
+    print("salut! On est ici!! ", os.getcwd())
     os.mkdir('./'+manga_name+'/chapter'+str(number))
     os.chdir('./'+manga_name+'/chapter'+str(number))
     print('Directory created for chapter', str(number))
@@ -58,7 +59,7 @@ for chapterLink in chapterLinks:
                     f.write(image.content)
             else: 
                 continue
-        os.chdir('..')
+        os.chdir('../..')
         number += 1
     except FileExistsError:
         print('Chapter file already exist')
