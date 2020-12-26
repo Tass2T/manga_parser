@@ -4,7 +4,8 @@ from bs4 import BeautifulSoup
 import lxml
 
 baseUrl = 'https://www.mangareader.net'
-manga = "high-school-of-the-dead"
+mangaList = ["high-school-of-the-dead", "akame-ga-kiru"]
+manga = mangaList[1]
 # will remove the line from the name
 manga_name = manga.replace('-', ' ')
 # number is used for chapter file incrementation
@@ -12,8 +13,7 @@ number = 1
 
 
 # my functions
-def createDirandMoveIntoIt() : 
-    print("salut! On est ici!! ", os.getcwd())
+def createDirAndMoveIntoIt() : 
     os.mkdir('./'+manga_name+'/chapter'+str(number))
     os.chdir('./'+manga_name+'/chapter'+str(number))
     print('Directory created for chapter', str(number))
@@ -47,18 +47,20 @@ chapterLinks = listChapters[1].find_all('a')
 for chapterLink in chapterLinks:
     chapterURL = chapterLink.get('href')
     try:
-        createDirandMoveIntoIt()
-        for x in range(1, 18):
-            chapter = requests.get(baseUrl + chapterURL) if x == 1 else requests.get(baseUrl+chapterURL+'/'+ str(x))
+        createDirAndMoveIntoIt()
+        for x in range(1, 100):
+            pageUrl = baseUrl + chapterURL if x == 1 else baseUrl+chapterURL+'/'+ str(x)
+            chapter = requests.get(pageUrl)
             chapterSoup = BeautifulSoup(chapter.text, 'lxml')
             pageImg = chapterSoup.find_all('img')
-            if pageImg:
+            
+            if chapter.url == pageUrl:
                 link = 'https:'+pageImg[2].get('src')
                 with open('page'+str(x)+'.jpg', 'wb') as f:
                     image = requests.get(link)
                     f.write(image.content)
             else: 
-                continue
+                break
         os.chdir('../..')
         number += 1
     except FileExistsError:
