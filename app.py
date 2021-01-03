@@ -4,8 +4,8 @@ from bs4 import BeautifulSoup
 import lxml
 
 baseUrl = 'https://www.mangareader.net'
-mangaList = ["high-school-of-the-dead", "akame-ga-kiru"]
-manga = mangaList[1]
+mangaList = ["high-school-of-the-dead", "akame-ga-kiru", "goblin-slayer"]
+manga = mangaList[0]
 # will remove the line from the name
 manga_name = manga.replace('-', ' ')
 # number is used for chapter file incrementation
@@ -52,10 +52,10 @@ for chapterLink in chapterLinks:
             pageUrl = baseUrl + chapterURL if x == 1 else baseUrl+chapterURL+'/'+ str(x)
             chapter = requests.get(pageUrl)
             chapterSoup = BeautifulSoup(chapter.text, 'lxml')
-            pageImg = chapterSoup.find_all('img')
+            pageImg = chapterSoup.find('img',{'id' : "ci"})
             
             if chapter.url == pageUrl:
-                link = 'https:'+pageImg[2].get('src')
+                link = 'https:'+pageImg.get('src')
                 with open('page'+str(x)+'.jpg', 'wb') as f:
                     image = requests.get(link)
                     f.write(image.content)
