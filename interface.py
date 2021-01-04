@@ -1,5 +1,9 @@
 import tkinter as tk
+import os
 from mangaGetter import scrapManga
+
+# this is the place where documents will be set
+path = os.path.expanduser("~/desktop")
 
 interface = tk.Tk()
 # we change the title here
@@ -30,11 +34,11 @@ welcome_text.pack()
 userInput = tk.Entry(interface)
 userInput.pack()
 
-def changeLabel () :
+def getManga () :
     formattedName = tk.Entry.get(userInput).replace(' ', '-')
-    scrapManga(formattedName)
+    scrapManga(formattedName, path)
 
-myFirstButton = tk.Button(interface, text="change the label", command=changeLabel)
+myFirstButton = tk.Button(interface, text="change the label", command=getManga)
 myFirstButton.pack()
 
 # will create an infinite loop to keep the windows open

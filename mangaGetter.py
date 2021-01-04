@@ -4,11 +4,11 @@ from bs4 import BeautifulSoup
 import lxml
 
 
-def scrapManga(manga_name) : 
+def scrapManga(manga_name, path) : 
+    
+    os.chdir(path)
 
     baseUrl = 'https://www.mangareader.net'
-
-    os.chdir('d:/Python_test/manga_scrapper/')
 
     try:
         os.mkdir("manga")
