@@ -5,7 +5,7 @@ import lxml
 
 baseUrl = 'https://www.mangareader.net'
 mangaList = ["high-school-of-the-dead", "akame-ga-kiru", "goblin-slayer"]
-manga = mangaList[0]
+manga = mangaList[2]
 # will remove the line from the name
 manga_name = manga.replace('-', ' ')
 # number is used for chapter file incrementation
